@@ -1,0 +1,82 @@
+{% extends "base.jinja2" %}
+{% from "govuk_frontend_jinja/components/button/macro.html" import govukButton %}
+{% block title %}
+  Books
+{% endblock title %}
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-one-half">
+      <blockquote class="lodge-quote">
+        <p class="govuk-body-l">"{{ quote.text }}"</p>
+        <footer class="lodge-quote__source">
+          — {{ quote.source }}
+        </footer>
+      </blockquote>
+    </div>
+  </div>
+  <hr id="books"
+      style="border: none;
+             border-top: 1px solid #e8e8e8;
+             margin: 60px 0" />
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-one-half">
+      <h1 class="govuk-heading-l">Books</h1>
+      <p class="govuk-body">Download a ritual book as a PDF. The following versions are available:</p>
+      <ul class="govuk-list govuk-list--bullet">
+        {% for book in books %}<li>{{ book.description }}</li>{% endfor %}
+      </ul>
+      <form method="post" action="{{ url_for('download') }}">
+        <div class="govuk-form-group">
+          <label class="govuk-label govuk-label--s" for="mode">Select the version you want to download</label>
+          <select class="govuk-select" id="mode" name="mode">
+            {% for book in books %}<option value="{{ book.mode }}">{{ book.description }}</option>{% endfor %}
+          </select>
+        </div>
+        {{ govukButton({"text": "Download"}) }}
+      </form>
+    </div>
+  </div>
+  <hr id="calendar"
+      style="border: none;
+             border-top: 1px solid #e8e8e8;
+             margin: 60px 0" />
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-one-half">
+      <h2 class="govuk-heading-l">Calendar</h2>
+      <p class="govuk-body">
+        Subscribe to the lodge calendar to receive meeting dates and events directly in your calendar app.
+      </p>
+      <h3 class="govuk-heading-s" style="margin-top: 24px">Google Calendar &amp; Outlook</h3>
+      <img src="{{ url_for('calendar_qr_web') }}"
+           alt="QR code for Google Calendar and Outlook"
+           width="160"
+           height="160"
+           style="display: block;
+                  margin-bottom: 16px;
+                  border: 1px solid black" />
+      <div style="display: flex;
+                  gap: 12px;
+                  flex-wrap: wrap;
+                  margin-bottom: 32px">
+        <a href="https://calendar.google.com/calendar/r?cid=1f868a9e0e79fd5262bb13c00c9d9893f344f73d0b422db63f7d8ec630a4d7b9@group.calendar.google.com"
+           target="_blank"
+           rel="noopener noreferrer"
+           class="govuk-button govuk-!-margin-bottom-0">Add to Google Calendar</a>
+        <a href="https://outlook.live.com/calendar/0/addfromweb?url=https%3A%2F%2Fcalendar.google.com%2Fcalendar%2Fical%2F1f868a9e0e79fd5262bb13c00c9d9893f344f73d0b422db63f7d8ec630a4d7b9%2540group.calendar.google.com%2Fpublic%2Fbasic.ics"
+           target="_blank"
+           rel="noopener noreferrer"
+           class="govuk-button govuk-!-margin-bottom-0">Subscribe in Outlook</a>
+      </div>
+      <h3 class="govuk-heading-s">Apple Calendar</h3>
+      <img src="{{ url_for('calendar_qr_apple') }}"
+           alt="QR code for Apple Calendar"
+           width="160"
+           height="160"
+           style="display: block;
+                  margin-bottom: 16px;
+                  border: 1px solid black" />
+      <a href="webcal://calendar.google.com/calendar/ical/1f868a9e0e79fd5262bb13c00c9d9893f344f73d0b422db63f7d8ec630a4d7b9%40group.calendar.google.com/public/basic.ics"
+         class="govuk-button govuk-!-margin-bottom-0">Subscribe in Apple Calendar</a>
+    </div>
+  </div>
+{% endblock content %}

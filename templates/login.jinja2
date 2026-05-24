@@ -1,0 +1,23 @@
+{# djlint:off #}
+{% extends "base.jinja2" %}
+{% from "govuk_frontend_jinja/components/error-summary/macro.html" import govukErrorSummary %}
+{% from "govuk_frontend_jinja/components/input/macro.html" import govukInput %}
+{% from "govuk_frontend_jinja/components/button/macro.html" import govukButton %}
+{# djlint:on #}
+{% block title %}
+  Sign in
+{% endblock title %}
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      {% if form_error %}
+        {{ govukErrorSummary({"titleText": "There is a problem", "errorList": [{"text": form_error, "href": "#password"}]}) }}
+      {% endif %}
+      <h1 class="govuk-heading-l">Sign in</h1>
+      <form method="post" action="{{ url_for('login') }}" novalidate>
+        {{ govukInput({"label": {"text": "Password"}, "id": "password", "name": "password", "type": "password", "autocomplete": "current-password", "classes": "govuk-input--width-20", "errorMessage": {"text": form_error} if form_error else None}) }}
+        {{ govukButton({"text": "Sign in"}) }}
+      </form>
+    </div>
+  </div>
+{% endblock content %}

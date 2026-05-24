@@ -1,0 +1,38 @@
+{% extends "base.jinja2" %}
+{% from "govuk_frontend_jinja/components/button/macro.html" import govukButton %}
+{% block title %}
+  Calendar
+{% endblock title %}
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-one-half">
+      <h1 class="govuk-heading-l">Calendar</h1>
+      <p class="govuk-body">
+        Subscribe to the lodge calendar to receive meeting dates and events
+        directly in your calendar app. Scan the QR code or use one of the buttons
+        below.
+      </p>
+      <img src="{{ url_for('calendar_qr') }}"
+           alt="QR code to subscribe to the lodge calendar"
+           width="180"
+           height="180"
+           style="display: block;
+                  margin-bottom: 24px" />
+      <div class="govuk-button-group"
+           style="flex-direction: column;
+                  align-items: flex-start;
+                  gap: 10px">
+        <a href="https://calendar.google.com/calendar/r?cid=1f868a9e0e79fd5262bb13c00c9d9893f344f73d0b422db63f7d8ec630a4d7b9@group.calendar.google.com"
+           target="_blank"
+           rel="noopener noreferrer"
+           class="govuk-button">Add to Google Calendar</a>
+        <a href="webcal://calendar.google.com/calendar/ical/1f868a9e0e79fd5262bb13c00c9d9893f344f73d0b422db63f7d8ec630a4d7b9%40group.calendar.google.com/public/basic.ics"
+           class="govuk-button">Subscribe in Apple Calendar</a>
+        <a href="https://outlook.live.com/calendar/0/addfromweb?url=https%3A%2F%2Fcalendar.google.com%2Fcalendar%2Fical%2F1f868a9e0e79fd5262bb13c00c9d9893f344f73d0b422db63f7d8ec630a4d7b9%2540group.calendar.google.com%2Fpublic%2Fbasic.ics"
+           target="_blank"
+           rel="noopener noreferrer"
+           class="govuk-button">Subscribe in Outlook</a>
+      </div>
+    </div>
+  </div>
+{% endblock content %}

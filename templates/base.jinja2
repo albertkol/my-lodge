@@ -1,0 +1,144 @@
+{% from "govuk_frontend_jinja/components/skip-link/macro.html" import govukSkipLink %}
+{% from "govuk_frontend_jinja/components/service-navigation/macro.html" import govukServiceNavigation %}
+<!DOCTYPE html>
+<html lang="en" class="govuk-template">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>
+      {% block title %}
+        Books
+      {% endblock title %}
+    – my-lodge</title>
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='govuk/govuk-frontend.min.css') }}" />
+    <style>
+      :root {
+        --govuk-assets-path: "{{ url_for('static', filename='govuk/assets/') }}";
+      }
+      .lodge-header {
+        background-color: white;
+        padding: 15px 0;
+      }
+      .lodge-header__inner {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .lodge-header__title {
+        color: #003366;
+        font-family: GDS Transport, arial, sans-serif;
+        font-size: 1.1rem;
+        font-weight: 700;
+        text-decoration: none;
+      }
+      .lodge-header__logo {
+        height: 32px;
+        width: auto;
+      }
+      .govuk-button {
+        background-color: #003366;
+      }
+      .govuk-button:hover {
+        background-color: #00224d;
+      }
+      .govuk-service-navigation {
+        background-color: white;
+        border-top: none;
+        border-bottom: none;
+      }
+      .govuk-service-navigation__link:link,
+      .govuk-service-navigation__link:visited {
+        color: #003366;
+      }
+      .govuk-service-navigation__link:not(:hover):not(:active) {
+        text-decoration: underline;
+      }
+      .govuk-service-navigation__toggle {
+        color: #003366;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      .lodge-quote {
+        margin: 0;
+        padding: 60px 0 60px 60px;
+        border-left: 4px solid #003366;
+      }
+      .lodge-quote p {
+        margin: 0 0 8px;
+      }
+      .lodge-quote__source {
+        font-size: 0.9rem;
+        color: #505a5f;
+        font-family: GDS Transport, arial, sans-serif;
+      }
+      .lodge-footer {
+        background-color: white;
+        padding: 25px 0;
+        margin-top: 40px;
+      }
+      .lodge-footer__inner {
+        color: #505a5f;
+        font-family: GDS Transport, arial, sans-serif;
+        font-size: 0.9rem;
+      }
+      .lodge-section-rule {
+        border: none;
+        border-top: 1px solid #e8e8e8;
+        margin: 120px 0 0 0;
+      }
+      @media (max-width: 40.0625em) {
+        .lodge-section-rule {
+          margin-top: 60px;
+        }
+      }
+    </style>
+  </head>
+  <body class="govuk-template__body">
+    <script>
+      document.body.className +=
+        " js-enabled" +
+        ("noModule" in HTMLScriptElement.prototype ? " govuk-frontend-supported" : "");
+    </script>
+    {# djlint:off #}
+    {{ govukSkipLink({"href": "#main-content", "text": "Skip to main content"}) }}
+    {# djlint:on #}
+    <header class="lodge-header">
+      <div class="govuk-width-container lodge-header__inner">
+        <img src="{{ url_for('static', filename='logo.svg') }}"
+             alt=""
+             class="lodge-header__logo"
+             aria-hidden="true"
+             width="32"
+             height="32" />
+        <a href="{{ url_for('index') }}" class="lodge-header__title">my-lodge</a>
+      </div>
+    </header>
+    {# djlint:off #}
+    {{ govukServiceNavigation({
+      "navigation": [
+        {"href": url_for('index') + "#books", "text": "Books"},
+        {"href": url_for('index') + "#calendar", "text": "Calendar"}
+      ]
+    }) }}
+    {# djlint:on #}
+    <div class="govuk-width-container">
+      <hr class="lodge-section-rule" />
+      <main class="govuk-main-wrapper govuk-main-wrapper--l" id="main-content">
+        {% block content %}
+        {% endblock content %}
+      </main>
+      <hr class="lodge-section-rule" />
+    </div>
+    <footer class="lodge-footer">
+      <div class="govuk-width-container lodge-footer__inner">{{ current_year }} my-lodge</div>
+    </footer>
+    <script type="module">
+      import { initAll } from "{{ url_for('static', filename='govuk/govuk-frontend.min.js') }}";
+      initAll({ assetPath: "{{ url_for('static', filename='govuk/assets/') }}" });
+    </script>
+  </body>
+</html>

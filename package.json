@@ -1,0 +1,10 @@
+{
+  "name": "my-lodge",
+  "private": true,
+  "scripts": {
+    "install-fe": "cp -r node_modules/govuk-frontend/dist/govuk static/govuk"
+  },
+  "dependencies": {
+    "govuk-frontend": "6.1.0"
+  }
+}
