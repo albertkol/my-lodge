@@ -1,8 +1,8 @@
-# Stage 1: clone lodge-books using a token passed as a build secret
+# Stage 1: clone lodge-books using a token passed as a build arg
 FROM alpine/git AS books
-RUN --mount=type=secret,id=lodge_books_token \
-    git clone \
-        "https://$(cat /run/secrets/lodge_books_token)@github.com/albertkolozsvari/lodge-books.git" \
+ARG LODGE_BOOKS_TOKEN
+RUN git clone \
+        "https://${LODGE_BOOKS_TOKEN}@github.com/albertkolozsvari/lodge-books.git" \
         /lodge-books
 
 

@@ -17,9 +17,10 @@
     <style>
       :root {
         --govuk-assets-path: "{{ url_for('static', filename='govuk/assets/') }}";
+        --lodge-paper: #faf8f5;
       }
       .lodge-header {
-        background-color: white;
+        background-color: var(--lodge-paper);
         padding: 15px 0;
       }
       .lodge-header__inner {
@@ -45,7 +46,7 @@
         background-color: #00224d;
       }
       .govuk-service-navigation {
-        background-color: white;
+        background-color: var(--lodge-paper);
         border-top: none;
         border-bottom: none;
       }
@@ -59,7 +60,11 @@
       .govuk-service-navigation__toggle {
         color: #003366;
       }
-      html {
+      html,
+      body,
+      .govuk-template,
+      .govuk-template__body {
+        background-color: var(--lodge-paper);
         scroll-behavior: smooth;
       }
       .lodge-quote {
@@ -76,7 +81,7 @@
         font-family: GDS Transport, arial, sans-serif;
       }
       .lodge-footer {
-        background-color: white;
+        background-color: var(--lodge-paper);
         padding: 25px 0;
         margin-top: 40px;
       }

@@ -2,6 +2,7 @@ import io
 import os
 import random
 from datetime import datetime
+from urllib.parse import quote
 
 import qrcode
 import yaml
@@ -181,21 +182,31 @@ def login():
     return render_template("login.jinja2", form_error=form_error)
 
 
+def _calendar_urls():
+    cid = os.environ["CALENDAR_ID"]
+    ical_https = f"https://calendar.google.com/calendar/ical/{cid}%40group.calendar.google.com/public/basic.ics"
+    return {
+        "calendar_google_url": (
+            f"https://calendar.google.com/calendar/r?cid={cid}@group.calendar.google.com"
+        ),
+        "calendar_outlook_url": (
+            f"https://outlook.live.com/calendar/0/addfromweb?url={quote(ical_https)}"
+        ),
+        "calendar_webcal_url": (
+            f"webcal://calendar.google.com/calendar/ical/{cid}%40group.calendar.google.com/public/basic.ics"
+        ),
+        "calendar_ical_https": ical_https,
+    }
+
+
 @app.route("/")
 def index():
-    return render_template("index.jinja2", books=_books(), quote=random.choice(QUOTES))
-
-
-_CALENDAR_WEBCAL = (
-    "webcal://calendar.google.com/calendar/ical/"
-    "1f868a9e0e79fd5262bb13c00c9d9893f344f73d0b422db63f7d8ec630a4d7b9"
-    "%40group.calendar.google.com/public/basic.ics"
-)
-_CALENDAR_HTTPS = (
-    "https://calendar.google.com/calendar/ical/"
-    "1f868a9e0e79fd5262bb13c00c9d9893f344f73d0b422db63f7d8ec630a4d7b9"
-    "%40group.calendar.google.com/public/basic.ics"
-)
+    return render_template(
+        "index.jinja2",
+        books=_books(),
+        quote=random.choice(QUOTES),
+        **_calendar_urls(),
+    )
 
 
 def _make_qr(data):
@@ -207,12 +218,12 @@ def _make_qr(data):
 
 @app.route("/calendar/qr-apple.png")
 def calendar_qr_apple():
-    return _make_qr(_CALENDAR_WEBCAL)
+    return _make_qr(_calendar_urls()["calendar_webcal_url"])
 
 
 @app.route("/calendar/qr-web.png")
 def calendar_qr_web():
-    return _make_qr(_CALENDAR_HTTPS)
+    return _make_qr(_calendar_urls()["calendar_ical_https"])
 
 
 @app.route("/download", methods=["POST"])

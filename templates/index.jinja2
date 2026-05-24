@@ -58,11 +58,11 @@
                   gap: 12px;
                   flex-wrap: wrap;
                   margin-bottom: 32px">
-        <a href="https://calendar.google.com/calendar/r?cid=1f868a9e0e79fd5262bb13c00c9d9893f344f73d0b422db63f7d8ec630a4d7b9@group.calendar.google.com"
+        <a href="{{ calendar_google_url }}"
            target="_blank"
            rel="noopener noreferrer"
            class="govuk-button govuk-!-margin-bottom-0">Add to Google Calendar</a>
-        <a href="https://outlook.live.com/calendar/0/addfromweb?url=https%3A%2F%2Fcalendar.google.com%2Fcalendar%2Fical%2F1f868a9e0e79fd5262bb13c00c9d9893f344f73d0b422db63f7d8ec630a4d7b9%2540group.calendar.google.com%2Fpublic%2Fbasic.ics"
+        <a href="{{ calendar_outlook_url }}"
            target="_blank"
            rel="noopener noreferrer"
            class="govuk-button govuk-!-margin-bottom-0">Subscribe in Outlook</a>
@@ -75,7 +75,7 @@
            style="display: block;
                   margin-bottom: 16px;
                   border: 1px solid black" />
-      <a href="webcal://calendar.google.com/calendar/ical/1f868a9e0e79fd5262bb13c00c9d9893f344f73d0b422db63f7d8ec630a4d7b9%40group.calendar.google.com/public/basic.ics"
+      <a href="{{ calendar_webcal_url }}"
          class="govuk-button govuk-!-margin-bottom-0">Subscribe in Apple Calendar</a>
     </div>
   </div>
