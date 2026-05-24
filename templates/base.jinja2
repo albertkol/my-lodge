@@ -111,12 +111,14 @@
         font-family: GDS Transport, arial, sans-serif;
         font-size: 0.9rem;
       }
-      .govuk-service-navigation__list {
-        display: flex;
-        width: 100%;
-      }
-      .govuk-service-navigation__list li:last-child {
-        margin-left: auto;
+      @media (min-width: 40.0625em) {
+        .govuk-service-navigation__list {
+          display: flex;
+          width: 100%;
+        }
+        .govuk-service-navigation__list li:last-child {
+          margin-left: auto;
+        }
       }
       .lodge-footer__back-to-top {
         color: #003366;
