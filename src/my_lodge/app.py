@@ -9,7 +9,7 @@ import yaml
 from flask import Flask, redirect, render_template, request, send_file, session, url_for
 from jinja2 import ChoiceLoader, FileSystemLoader, PackageLoader, PrefixLoader
 
-from my_lodge.cli import BOOKS_REPO, ROOT
+from my_lodge.cli import BOOKS_REPO, ROOT, build
 
 _CHARGE = "Charge to the Initiate, First Degree"
 _TOOLS = "Working Tools, First Degree"
@@ -236,6 +236,21 @@ def download():
     return send_file(
         str(output_path), as_attachment=True, download_name=f"{book['name']}.pdf"
     )
+
+
+def _generate_pdfs_at_startup() -> None:
+    if not BOOKS_REPO.exists():
+        return
+    output_dir = ROOT / "output"
+    output_dir.mkdir(exist_ok=True)
+    for mode in ("craft", "craft-dark", "ra", "ra-dark"):
+        if not (output_dir / f"{mode}.pdf").exists():
+            print(f"Generating {mode}...")
+            build(mode)
+    print("All books ready.")
+
+
+_generate_pdfs_at_startup()
 
 
 def main():
