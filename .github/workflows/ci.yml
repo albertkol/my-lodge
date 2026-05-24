@@ -16,7 +16,7 @@ jobs:
         with:
           enable-cache: true
 
-      - run: uv sync --frozen --no-sources --group dev
+      - run: uv sync --no-sources --group dev
 
       - run: uv run ruff check .
       - run: uv run ruff format --check .
