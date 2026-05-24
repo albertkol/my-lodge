@@ -9,7 +9,7 @@ import yaml
 from flask import Flask, redirect, render_template, request, send_file, session, url_for
 from jinja2 import ChoiceLoader, FileSystemLoader, PackageLoader, PrefixLoader
 
-from my_lodge.cli import BOOKS_REPO, ROOT, generate_book
+from my_lodge.cli import BOOKS_REPO, ROOT
 
 _CHARGE = "Charge to the Initiate, First Degree"
 _TOOLS = "Working Tools, First Degree"
@@ -232,12 +232,7 @@ def download():
     book = next((b for b in _books() if b["mode"] == mode), None)
     if not book:
         return "Not found", 404
-    output_path = generate_book(
-        config=book["config"],
-        keywords=book["keywords"],
-        mode=book["mode"],
-        output_name=book["mode"],
-    )
+    output_path = ROOT / "output" / f"{book['mode']}.pdf"
     return send_file(
         str(output_path), as_attachment=True, download_name=f"{book['name']}.pdf"
     )
