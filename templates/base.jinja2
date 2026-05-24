@@ -8,10 +8,9 @@
           content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="robots" content="noindex, nofollow" />
     <title>
-      {% block title %}
-        Books
-      {% endblock title %}
-    – my-lodge</title>
+      {% if self.title() | trim %}{{ self.title() | trim }} – {% endif %}my-lodge
+    </title>
+    <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='logo.svg') }}" />
     <link rel="stylesheet"
           href="{{ url_for('static', filename='govuk/govuk-frontend.min.css') }}" />
     <style>
@@ -31,12 +30,12 @@
       .lodge-header__title {
         color: #003366;
         font-family: GDS Transport, arial, sans-serif;
-        font-size: 1.1rem;
+        font-size: 1.25rem;
         font-weight: 700;
         text-decoration: none;
       }
       .lodge-header__logo {
-        height: 32px;
+        height: 40px;
         width: auto;
       }
       .govuk-button {
@@ -44,6 +43,25 @@
       }
       .govuk-button:hover {
         background-color: #00224d;
+      }
+      .govuk-input:focus,
+      .govuk-select:focus,
+      .govuk-service-navigation__link:focus {
+        outline-color: #DC143C !important;
+        border-color: #DC143C !important;
+      }
+      .govuk-service-navigation__link:focus {
+        background-color: #DC143C !important;
+        color: #ffffff !important;
+      }
+      .govuk-button:focus,
+      .govuk-button:focus-visible,
+      .govuk-button:focus:active {
+        outline: 3px solid transparent !important;
+        background-color: #DC143C !important;
+        box-shadow: 0 -2px #DC143C, 0 4px #0b0c0c !important;
+        color: #ffffff !important;
+        border-color: #DC143C !important;
       }
       .govuk-service-navigation {
         background-color: var(--lodge-paper);
@@ -86,9 +104,23 @@
         margin-top: 40px;
       }
       .lodge-footer__inner {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
         color: #505a5f;
         font-family: GDS Transport, arial, sans-serif;
         font-size: 0.9rem;
+      }
+      .govuk-service-navigation__list {
+        display: flex;
+        width: 100%;
+      }
+      .govuk-service-navigation__list li:last-child {
+        margin-left: auto;
+      }
+      .lodge-footer__back-to-top {
+        color: #003366;
+        text-decoration: underline;
       }
       .lodge-section-rule {
         border: none;
@@ -117,19 +149,16 @@
              alt=""
              class="lodge-header__logo"
              aria-hidden="true"
-             width="32"
-             height="32" />
+             width="40"
+             height="40" />
         <a href="{{ url_for('index') }}" class="lodge-header__title">my-lodge</a>
       </div>
     </header>
-    {# djlint:off #}
-    {{ govukServiceNavigation({
-      "navigation": [
-        {"href": url_for('index') + "#books", "text": "Books"},
-        {"href": url_for('index') + "#calendar", "text": "Calendar"}
-      ]
-    }) }}
-    {# djlint:on #}
+    {% if session.get('authenticated') %}
+      {# djlint:off #}
+      {{ govukServiceNavigation({"navigation": [{"href": url_for('index') + "#books", "text": "Books"}, {"href": url_for('index') + "#calendar", "text": "Calendar"}, {"href": url_for('logout'), "text": "Log out"}]}) }}
+      {# djlint:on #}
+    {% endif %}
     <div class="govuk-width-container">
       <hr class="lodge-section-rule" />
       <main class="govuk-main-wrapper govuk-main-wrapper--l" id="main-content">
@@ -139,7 +168,10 @@
       <hr class="lodge-section-rule" />
     </div>
     <footer class="lodge-footer">
-      <div class="govuk-width-container lodge-footer__inner">{{ current_year }} my-lodge</div>
+      <div class="govuk-width-container lodge-footer__inner">
+        <span>{{ current_year }} my-lodge</span>
+        <a href="#" class="lodge-footer__back-to-top">Back to top ↑</a>
+      </div>
     </footer>
     <script type="module">
       import { initAll } from "{{ url_for('static', filename='govuk/govuk-frontend.min.js') }}";

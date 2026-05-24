@@ -164,10 +164,16 @@ def robots():
 
 @app.before_request
 def require_login():
-    if request.endpoint in ("login", "robots", "static"):
+    if request.endpoint in ("login", "logout", "robots", "static"):
         return
     if not session.get("authenticated"):
         return redirect(url_for("login"))
+
+
+@app.route("/logout")
+def logout():
+    session.clear()
+    return redirect(url_for("login"))
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -240,14 +246,25 @@ def download():
 
 def _generate_pdfs_at_startup() -> None:
     if not BOOKS_REPO.exists():
+        print("lodge-books not found, skipping PDF generation.")
         return
     output_dir = ROOT / "output"
     output_dir.mkdir(exist_ok=True)
-    for mode in ("craft", "craft-dark", "ra", "ra-dark"):
-        if not (output_dir / f"{mode}.pdf").exists():
-            print(f"Generating {mode}...")
-            build(mode)
-    print("All books ready.")
+    modes = ("craft", "craft-dark", "craft-2026-05", "ra", "ra-dark")
+    total_start = datetime.now()
+    print(f"[startup] Starting PDF generation for {len(modes)} books...")
+    for mode in modes:
+        pdf_path = output_dir / f"{mode}.pdf"
+        if pdf_path.exists():
+            print(f"[startup] {mode}: already exists, skipping.")
+            continue
+        start = datetime.now()
+        print(f"[startup] {mode}: generating...")
+        build(mode)
+        elapsed = (datetime.now() - start).total_seconds()
+        print(f"[startup] {mode}: done in {elapsed:.1f}s.")
+    total_elapsed = (datetime.now() - total_start).total_seconds()
+    print(f"[startup] All books ready in {total_elapsed:.1f}s.")
 
 
 _generate_pdfs_at_startup()
