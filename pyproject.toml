@@ -5,7 +5,7 @@ description = ""
 authors = [{name = "Albert Kolozsvari", email = "albertartk@gmail.com"}]
 requires-python = ">=3.13"
 dependencies = [
-    "bookcraft>=0.2.0",
+    "bookcraft>=0.3.0",
     "flask>=3.1",
     "govuk-frontend-jinja>=3.0",
     "gunicorn>=23.0",
