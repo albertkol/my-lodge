@@ -2,7 +2,7 @@
 FROM alpine/git AS books
 ARG LODGE_BOOKS_TOKEN
 RUN git clone \
-        "https://${LODGE_BOOKS_TOKEN}@github.com/albertkolozsvari/lodge-books.git" \
+        "https://x-access-token:${LODGE_BOOKS_TOKEN}@github.com/albertkolozsvari/lodge-books.git" \
         /lodge-books
 
 
