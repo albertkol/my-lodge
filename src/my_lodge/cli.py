@@ -6,10 +6,11 @@ ROOT = Path(__file__).resolve().parent.parent.parent
 BOOKS_REPO = ROOT.parent / "lodge-books"
 
 MODES = {
-    "craft": ("craft.yaml", "c-keywords.yaml"),
-    "craft-dark": ("craft-dark.yaml", "c-keywords.yaml"),
-    "ra": ("ra.yaml", "ra-keywords.yaml"),
-    "ra-dark": ("ra-dark.yaml", "ra-keywords.yaml"),
+    "craft": ("craft.yaml", "c-keywords.yaml", "craft"),
+    "craft-dark": ("craft-dark.yaml", "c-keywords.yaml", "craft-dark"),
+    "craft-2026-05": ("craft-2026-05.yaml", "c-keywords.yaml", "craft"),
+    "ra": ("ra.yaml", "ra-keywords.yaml", "ra"),
+    "ra-dark": ("ra-dark.yaml", "ra-keywords.yaml", "ra-dark"),
 }
 
 
@@ -28,11 +29,11 @@ def generate_book(config: str, keywords: str, mode: str, output_name: str) -> Pa
 
 
 def build(mode: str) -> None:
-    settings, keywords = MODES[mode]
+    settings, keywords, bookcraft_mode = MODES[mode]
     generate_book(
         config=f"config/{settings}",
         keywords=f"config/{keywords}",
-        mode=mode,
+        mode=bookcraft_mode,
         output_name=mode,
     )
 
