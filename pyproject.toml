@@ -45,6 +45,3 @@ target-version = "py313"
 
 [tool.ruff.lint]
 select = ["E", "F", "I"]
-
-[tool.uv.sources]
-bookcraft = { path = "../bookcraft", editable = true }
