@@ -8,14 +8,12 @@ RUN apt-get update && apt-get install -y git && rm -rf /var/lib/apt/lists/*
 WORKDIR /app
 
 COPY pyproject.toml uv.lock ./
-RUN uv sync --frozen --no-dev --no-install-project --no-sources
-
+RUN uv sync --frozen --no-dev --no-install-project
 COPY src/ src/
 COPY static/ static/
 COPY templates/ templates/
 
-RUN uv sync --frozen --no-dev --no-sources
-
+RUN uv sync --frozen --no-dev
 COPY entrypoint.sh ./
 RUN chmod +x entrypoint.sh
 

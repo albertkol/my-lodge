@@ -37,8 +37,6 @@ dev = [
     "pre-commit>=4.0",
 ]
 
-[tool.uv.sources]
-bookcraft = { path = "../bookcraft", editable = true }
 
 [tool.djlint]
 profile = "jinja"
