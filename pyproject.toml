@@ -16,6 +16,7 @@ dependencies = [
 [project.scripts]
 craft = "my_lodge.cli:craft"
 craft-dark = "my_lodge.cli:craft_dark"
+craft-2026-05 = "my_lodge.cli:craft_2026_05"
 ra = "my_lodge.cli:ra"
 ra-dark = "my_lodge.cli:ra_dark"
 serve = "my_lodge.app:main"

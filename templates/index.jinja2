@@ -1,7 +1,11 @@
 {% extends "base.jinja2" %}
 {% from "govuk_frontend_jinja/components/button/macro.html" import govukButton %}
+{% from "govuk_frontend_jinja/components/notification-banner/macro.html" import govukNotificationBanner %}
 {% block title %}{% endblock title %}
 {% block content %}
+  {% for message in get_flashed_messages() %}
+    {{ govukNotificationBanner({"text": message, "type": "important"}) }}
+  {% endfor %}
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-one-half">
       <blockquote class="lodge-quote">
@@ -23,14 +27,17 @@
       <ul class="govuk-list govuk-list--bullet">
         {% for book in books %}<li>{{ book.description }}</li>{% endfor %}
       </ul>
-      <form method="post" action="{{ url_for('download') }}">
+      <form method="post">
         <div class="govuk-form-group">
           <label class="govuk-label govuk-label--s" for="mode">Select the version you want to download</label>
           <select class="govuk-select" id="mode" name="mode">
             {% for book in books %}<option value="{{ book.mode }}">{{ book.description }}</option>{% endfor %}
           </select>
         </div>
-        {{ govukButton({"text": "Download"}) }}
+        <div style="display: flex; gap: 12px; flex-wrap: wrap">
+          {{ govukButton({"text": "Download", "attributes": {"formaction": url_for('download')}}) }}
+          {{ govukButton({"text": "Share book", "attributes": {"formaction": url_for('share')}}) }}
+        </div>
       </form>
     </div>
   </div>

@@ -1,3 +1,4 @@
+import base64
 import io
 import os
 import random
@@ -7,7 +8,17 @@ from urllib.parse import quote
 
 import qrcode
 import yaml
-from flask import Flask, redirect, render_template, request, send_file, session, url_for
+from flask import (
+    Flask,
+    flash,
+    redirect,
+    render_template,
+    request,
+    send_file,
+    session,
+    url_for,
+)
+from itsdangerous import BadSignature, SignatureExpired, URLSafeTimedSerializer
 from jinja2 import ChoiceLoader, FileSystemLoader, PackageLoader, PrefixLoader
 
 from my_lodge.cli import BOOKS_REPO, ROOT, build
@@ -163,9 +174,17 @@ def robots():
     return "User-agent: *\nDisallow: /\n", 200, {"Content-Type": "text/plain"}
 
 
+_SHARE_MAX_AGE = 60  # 1 minute
+
+
+def _share_serializer():
+    assert app.secret_key is not None
+    return URLSafeTimedSerializer(app.secret_key)
+
+
 @app.before_request
 def require_login():
-    if request.endpoint in ("login", "logout", "robots", "static"):
+    if request.endpoint in ("login", "logout", "robots", "static", "download_qr"):
         return
     if not session.get("authenticated"):
         return redirect(url_for("login"))
@@ -241,7 +260,45 @@ def download():
         return "Not found", 404
     output_path = ROOT / "output" / f"{book['mode']}.pdf"
     if not output_path.exists():
-        return "Book is still being generated, please try again in a few minutes.", 503
+        flash("This book is still being generated. Please try again in a few minutes.")
+        return redirect(url_for("index") + "#books")
+    return send_file(
+        str(output_path), as_attachment=True, download_name=f"{book['name']}.pdf"
+    )
+
+
+@app.route("/share", methods=["POST"])
+def share():
+    mode = request.form.get("mode")
+    book = next((b for b in _books() if b["mode"] == mode), None)
+    if not book:
+        return "Not found", 404
+    output_path = ROOT / "output" / f"{book['mode']}.pdf"
+    if not output_path.exists():
+        flash("This book is still being generated. Please try again in a few minutes.")
+        return redirect(url_for("index") + "#books")
+    token = _share_serializer().dumps(mode)
+    download_url = url_for("download_qr", token=token, _external=True)
+    buf = io.BytesIO()
+    qrcode.make(download_url).save(buf, format="PNG")
+    qr_b64 = base64.b64encode(buf.getvalue()).decode()
+    return render_template(
+        "share.jinja2", book=book, qr_b64=qr_b64, expires_minutes=_SHARE_MAX_AGE // 60
+    )
+
+
+@app.route("/download-qr/<token>")
+def download_qr(token: str):
+    try:
+        mode = _share_serializer().loads(token, max_age=_SHARE_MAX_AGE)
+    except SignatureExpired:
+        return render_template("expired.jinja2"), 410
+    except BadSignature:
+        return render_template("expired.jinja2"), 400
+    book = next((b for b in _books() if b["mode"] == mode), None)
+    if not book:
+        return render_template("expired.jinja2"), 404
+    output_path = ROOT / "output" / f"{book['mode']}.pdf"
     return send_file(
         str(output_path), as_attachment=True, download_name=f"{book['name']}.pdf"
     )

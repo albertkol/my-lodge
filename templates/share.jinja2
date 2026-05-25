@@ -1,0 +1,17 @@
+{% extends "base.jinja2" %}
+{% from "govuk_frontend_jinja/components/button/macro.html" import govukButton %}
+{% block title %}Share {{ book.name }}{% endblock title %}
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-one-half">
+      <h1 class="govuk-heading-l">Share {{ book.name }}</h1>
+      <p class="govuk-body">Scan this QR code to download the book. The link expires in {{ expires_minutes }} minutes.</p>
+      <img src="data:image/png;base64,{{ qr_b64 }}"
+           alt="QR code to download {{ book.name }}"
+           width="220"
+           height="220"
+           style="display: block; margin-bottom: 24px; border: 1px solid black" />
+      <a href="{{ url_for('index') }}#books" class="govuk-back-link">Back to books</a>
+    </div>
+  </div>
+{% endblock content %}

@@ -42,6 +42,10 @@ def craft():
     build("craft")
 
 
+def craft_2026_05():
+    build("craft-2026-05")
+
+
 def craft_dark():
     build("craft-dark")
 

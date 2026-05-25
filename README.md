@@ -7,14 +7,14 @@ Built with Flask and the [GOV.UK Design System](https://design-system.service.go
 ## Requirements
 
 - [uv](https://docs.astral.sh/uv/)
-- [lodge-books](https://github.com/albertkolozsvari/lodge-books) cloned as a sibling directory (`../lodge-books`)
+- [lodge-books](https://github.com/albertkol/lodge-books) cloned as a sibling directory (`../lodge-books`)
 
 ## Setup
 
 ```bash
 uv sync
 cp .env.example .env
-# fill in SECRET_KEY and APP_PASSWORD in .env
+# fill in SECRET_KEY, APP_PASSWORD, CALENDAR_ID, and LODGE_BOOKS_TOKEN in .env
 ```
 
 ## Running locally
@@ -28,11 +28,14 @@ make serve
 PDFs are written to `output/`. Requires `lodge-books` cloned as a sibling directory.
 
 ```bash
-uv run craft        # Calver Craft Ritual, light theme
-uv run craft-dark   # Calver Craft Ritual, dark theme
-uv run ra           # Domatic Royal Arch Ritual, light theme
-uv run ra-dark      # Domatic Royal Arch Ritual, dark theme
+make craft          # Calver Craft Ritual, light theme
+make craft-dark     # Calver Craft Ritual, dark theme
+make craft-2026-05  # Calver Craft Ritual, GH Edition 2026-05
+make ra             # Domatic Royal Arch Ritual, light theme
+make ra-dark        # Domatic Royal Arch Ritual, dark theme
 ```
+
+On the server, PDFs are generated automatically in the background at startup.
 
 ## Linting
 
@@ -42,6 +45,10 @@ uv run ruff format --check .
 uv run djlint templates/ --lint --extension jinja2
 uv run ty check
 ```
+
+## Deployment
+
+Deployed on [Render](https://render.com/) via Docker. Pushes to `main` trigger CI; if lint passes, the deploy hook is called automatically.
 
 ## Structure
 
