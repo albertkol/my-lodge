@@ -1,11 +1,7 @@
 {% extends "base.jinja2" %}
 {% from "govuk_frontend_jinja/components/button/macro.html" import govukButton %}
-{% from "govuk_frontend_jinja/components/notification-banner/macro.html" import govukNotificationBanner %}
 {% block title %}{% endblock title %}
 {% block content %}
-  {% for message in get_flashed_messages() %}
-    {{ govukNotificationBanner({"text": message, "type": "important"}) }}
-  {% endfor %}
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-one-half">
       <blockquote class="lodge-quote">

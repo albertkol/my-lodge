@@ -10,7 +10,6 @@ import qrcode
 import yaml
 from flask import (
     Flask,
-    flash,
     redirect,
     render_template,
     request,
@@ -260,11 +259,20 @@ def download():
         return "Not found", 404
     output_path = ROOT / "output" / f"{book['mode']}.pdf"
     if not output_path.exists():
-        flash("This book is still being generated. Please try again in a few minutes.")
-        return redirect(url_for("index") + "#books")
+        return _generating_error()
     return send_file(
         str(output_path), as_attachment=True, download_name=f"{book['name']}.pdf"
     )
+
+
+def _generating_error():
+    return render_template(
+        "error.jinja2",
+        title="Book not ready yet",
+        message="This book is still being generated. Please try again in a few minutes.",  # noqa: E501
+        back_url=url_for("index") + "#books",
+        back_text="Back to books",
+    ), 503
 
 
 @app.route("/share", methods=["POST"])
@@ -275,15 +283,18 @@ def share():
         return "Not found", 404
     output_path = ROOT / "output" / f"{book['mode']}.pdf"
     if not output_path.exists():
-        flash("This book is still being generated. Please try again in a few minutes.")
-        return redirect(url_for("index") + "#books")
+        return _generating_error()
     token = _share_serializer().dumps(mode)
     download_url = url_for("download_qr", token=token, _external=True)
     buf = io.BytesIO()
     qrcode.make(download_url).save(buf, format="PNG")
     qr_b64 = base64.b64encode(buf.getvalue()).decode()
     return render_template(
-        "share.jinja2", book=book, qr_b64=qr_b64, expires_minutes=_SHARE_MAX_AGE // 60
+        "share.jinja2",
+        book=book,
+        qr_b64=qr_b64,
+        expires_minutes=_SHARE_MAX_AGE // 60,
+        download_url=download_url,
     )
 
 
@@ -292,12 +303,30 @@ def download_qr(token: str):
     try:
         mode = _share_serializer().loads(token, max_age=_SHARE_MAX_AGE)
     except SignatureExpired:
-        return render_template("expired.jinja2"), 410
+        return render_template(
+            "error.jinja2",
+            title="Link expired",
+            message="This download link has expired. Please ask a lodge member to generate a new one.",  # noqa: E501
+            back_url=url_for("index"),
+            back_text="Back to home",
+        ), 410
     except BadSignature:
-        return render_template("expired.jinja2"), 400
+        return render_template(
+            "error.jinja2",
+            title="Invalid link",
+            message="This download link is not valid.",
+            back_url=url_for("index"),
+            back_text="Back to home",
+        ), 400
     book = next((b for b in _books() if b["mode"] == mode), None)
     if not book:
-        return render_template("expired.jinja2"), 404
+        return render_template(
+            "error.jinja2",
+            title="Not found",
+            message="This book could not be found.",
+            back_url=url_for("index"),
+            back_text="Back to home",
+        ), 404
     output_path = ROOT / "output" / f"{book['mode']}.pdf"
     return send_file(
         str(output_path), as_attachment=True, download_name=f"{book['name']}.pdf"
