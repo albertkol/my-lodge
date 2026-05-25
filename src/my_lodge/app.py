@@ -1,6 +1,7 @@
 import io
 import os
 import random
+import threading
 from datetime import datetime
 from urllib.parse import quote
 
@@ -239,6 +240,8 @@ def download():
     if not book:
         return "Not found", 404
     output_path = ROOT / "output" / f"{book['mode']}.pdf"
+    if not output_path.exists():
+        return "Book is still being generated, please try again in a few minutes.", 503
     return send_file(
         str(output_path), as_attachment=True, download_name=f"{book['name']}.pdf"
     )
@@ -267,7 +270,7 @@ def _generate_pdfs_at_startup() -> None:
     print(f"[startup] All books ready in {total_elapsed:.1f}s.")
 
 
-_generate_pdfs_at_startup()
+threading.Thread(target=_generate_pdfs_at_startup, daemon=True).start()
 
 
 def main():
