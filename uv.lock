@@ -22,17 +22,30 @@ wheels = [
 
 [[package]]
 name = "bookcraft"
-version = "0.3.0"
-source = { registry = "https://pypi.org/simple" }
+version = "1.0.0"
+source = { editable = "../bookcraft" }
 dependencies = [
     { name = "fpdf2" },
     { name = "pydantic" },
     { name = "pyyaml" },
     { name = "typing-extensions" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/c6/c8/7cc8079cc5eebbf8afe585ed77bba65a91cb01f110b63f0e45c1eddc93b3/bookcraft-0.3.0.tar.gz", hash = "sha256:a49c8b8b357c307512f1e77a634dea585d88526a943bb003911b3e561653d914", size = 48723, upload-time = "2026-05-24T17:22:01.57Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/0f/6e/63f4dae1497aa7a4f875616607d6e853bec0fc672da8c1e9caa1a3b81720/bookcraft-0.3.0-py3-none-any.whl", hash = "sha256:e7824d73bb58c490138c0db3511c838594f1934235fa6daa44f77b30a9f7f1bb", size = 22909, upload-time = "2026-05-24T17:21:59.987Z" },
+
+[package.metadata]
+requires-dist = [
+    { name = "fpdf2", specifier = ">=2.8.5" },
+    { name = "pydantic", specifier = ">=2.0" },
+    { name = "pyyaml", specifier = ">=6.0.2" },
+    { name = "typing-extensions", specifier = ">=4.15.0" },
+]
+
+[package.metadata.requires-dev]
+dev = [
+    { name = "pre-commit", specifier = ">=4.0" },
+    { name = "pytest", specifier = ">=8.0" },
+    { name = "pytest-cov", specifier = ">=6.0" },
+    { name = "ruff", specifier = ">=0.9" },
+    { name = "ty", specifier = ">=0.0.39" },
 ]
 
 [[package]]
@@ -354,7 +367,7 @@ dev = [
 
 [package.metadata]
 requires-dist = [
-    { name = "bookcraft", specifier = ">=0.3.0" },
+    { name = "bookcraft", editable = "../bookcraft" },
     { name = "flask", specifier = ">=3.1" },
     { name = "govuk-frontend-jinja", specifier = ">=3.0" },
     { name = "gunicorn", specifier = ">=23.0" },

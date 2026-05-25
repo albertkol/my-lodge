@@ -5,7 +5,7 @@ description = ""
 authors = [{name = "Albert Kolozsvari", email = "albertartk@gmail.com"}]
 requires-python = ">=3.13"
 dependencies = [
-    "bookcraft>=0.3.0",
+    "bookcraft>=1.1.0",
     "flask>=3.1",
     "govuk-frontend-jinja>=3.0",
     "gunicorn>=23.0",
@@ -36,6 +36,9 @@ dev = [
     "ty>=0.0.1a6",
     "pre-commit>=4.0",
 ]
+
+[tool.uv.sources]
+bookcraft = { path = "../bookcraft", editable = true }
 
 [tool.djlint]
 profile = "jinja"
