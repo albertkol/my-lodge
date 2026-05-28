@@ -19,6 +19,7 @@ RUN chmod +x entrypoint.sh
 # Pre-generate PDFs at build time so they are available immediately on startup.
 # LODGE_BOOKS_TOKEN is automatically injected by Render from the existing env var.
 # The entrypoint still clones lodge-books at runtime so books.yaml is available for the index page.
+ADD https://worldtimeapi.org/api/timezone/UTC /tmp/cache-bust
 ARG LODGE_BOOKS_TOKEN
 RUN git clone "https://x-access-token:${LODGE_BOOKS_TOKEN}@github.com/albertkol/lodge-books.git" /lodge-books && \
     mkdir -p /app/output && \
