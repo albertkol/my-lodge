@@ -22,7 +22,6 @@ RUN chmod +x entrypoint.sh
 ARG LODGE_BOOKS_TOKEN
 RUN git clone "https://x-access-token:${LODGE_BOOKS_TOKEN}@github.com/albertkol/lodge-books.git" /lodge-books && \
     mkdir -p /app/output && \
-    /app/.venv/bin/python -c "from my_lodge.cli import build; [build(m) for m in ('craft', 'craft-dark', 'craft-2026-05', 'ra', 'ra-dark')]" && \
-    rm -rf /lodge-books
+    /app/.venv/bin/python -c "from my_lodge.cli import build; [build(m) for m in ('craft', 'craft-dark', 'craft-2026-05', 'ra', 'ra-dark')]"
 
 ENTRYPOINT ["./entrypoint.sh"]
