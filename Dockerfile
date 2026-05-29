@@ -23,6 +23,6 @@ ADD https://api.github.com/zen /tmp/cache-bust
 ARG LODGE_BOOKS_TOKEN
 RUN git clone "https://x-access-token:${LODGE_BOOKS_TOKEN}@github.com/albertkol/lodge-books.git" /lodge-books && \
     mkdir -p /app/output && \
-    /app/.venv/bin/python -c "from my_lodge.cli import build; [build(m) for m in ('craft', 'craft-dark', 'craft-2026-05', 'ra', 'ra-dark')]"
+    /app/.venv/bin/python -c "from my_lodge.cli import build; [build(m) for m in ('craft', 'craft-dark', 'craft-2026-05', 'craft-first-degree', 'craft-second-degree', 'ra', 'ra-dark')]"
 
 ENTRYPOINT ["./entrypoint.sh"]
