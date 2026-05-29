@@ -13,6 +13,12 @@ craft-dark:
 craft-2026-05:
 	uv run craft-2026-05
 
+craft-first-degree:
+	uv run craft-first-degree
+
+craft-second-degree:
+	uv run craft-second-degree
+
 ra:
 	uv run ra
 

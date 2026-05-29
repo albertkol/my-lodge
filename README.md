@@ -28,11 +28,13 @@ make serve
 PDFs are written to `output/`. Requires `lodge-books` cloned as a sibling directory.
 
 ```bash
-make craft          # Calver Craft Ritual, light theme
-make craft-dark     # Calver Craft Ritual, dark theme
-make craft-2026-05  # Calver Craft Ritual, GH Edition 2026-05
-make ra             # Domatic Royal Arch Ritual, light theme
-make ra-dark        # Domatic Royal Arch Ritual, dark theme
+make craft                # Calver Craft Ritual, light theme
+make craft-dark           # Calver Craft Ritual, dark theme
+make craft-2026-05        # Calver Craft Ritual, GH Edition 2026-05
+make craft-first-degree   # Calver Craft Ritual, First Degree
+make craft-second-degree  # Calver Craft Ritual, Second Degree
+make ra                   # Domatic Royal Arch Ritual, light theme
+make ra-dark              # Domatic Royal Arch Ritual, dark theme
 ```
 
 On the server, PDFs are generated automatically in the background at startup.

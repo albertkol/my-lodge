@@ -339,7 +339,15 @@ def _generate_pdfs_at_startup() -> None:
         return
     output_dir = ROOT / "output"
     output_dir.mkdir(exist_ok=True)
-    modes = ("craft", "craft-dark", "craft-2026-05", "ra", "ra-dark")
+    modes = (
+        "craft",
+        "craft-dark",
+        "craft-2026-05",
+        "craft-first-degree",
+        "craft-second-degree",
+        "ra",
+        "ra-dark",
+    )
     total_start = datetime.now()
     print(f"[startup] Starting PDF generation for {len(modes)} books...")
     for mode in modes:
