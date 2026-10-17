@@ -8,7 +8,7 @@ BOOKS_REPO = ROOT.parent / "lodge-books"
 MODES = {
     "craft": ("craft.yaml", "c-keywords.yaml", "craft"),
     "craft-dark": ("craft-dark.yaml", "c-keywords.yaml", "craft-dark"),
-    "craft-2026-05": ("craft-2026-05.yaml", "c-keywords.yaml", "craft"),
+    "craft-2026-10": ("craft-2026-10.yaml", "c-keywords.yaml", "craft"),
     "craft-first-degree": ("craft-first-degree.yaml", "c-keywords.yaml", "craft"),
     "craft-second-degree": ("craft-second-degree.yaml", "c-keywords.yaml", "craft"),
     "ra": ("ra.yaml", "ra-keywords.yaml", "ra"),
@@ -44,8 +44,8 @@ def craft():
     build("craft")
 
 
-def craft_2026_05():
-    build("craft-2026-05")
+def craft_2026_10():
+    build("craft-2026-10")
 
 
 def craft_first_degree():

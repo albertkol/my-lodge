@@ -1,5 +1,5 @@
 version = 1
-revision = 3
+revision = 5
 requires-python = ">=3.13"
 
 [[package]]
@@ -22,7 +22,7 @@ wheels = [
 
 [[package]]
 name = "bookcraft"
-version = "1.3.0"
+version = "1.4.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "fpdf2" },
@@ -30,9 +30,9 @@ dependencies = [
     { name = "pyyaml" },
     { name = "typing-extensions" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/c0/b1/0ed0b88d8ad9057b73ed018dda5268e10582e456d246f372848c302091b6/bookcraft-1.3.0.tar.gz", hash = "sha256:9d8b09acb6bf478b77e5f49ee0f614724690d82d5e615aca9f6dca7a7d081f43", size = 50810, upload-time = "2026-05-29T20:13:46.493Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/5c/53/5f490ec879c8d4c79997da6a432e12f198dd6e4646570782d33b5dc3be0d/bookcraft-1.4.0.tar.gz", hash = "sha256:fbc5c27b4053a6832fd512c6132d30355727d13343cb71d5871738ce63dde9f0", size = 51366, upload-time = "2026-10-17T00:21:01.896Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/31/aa/75de3fc028ffb40efb06ff6c284bf818403a1ae46a4a600b6aeb9ebbc956/bookcraft-1.3.0-py3-none-any.whl", hash = "sha256:df3e63f6b0a77a090241370fb97ca38af518af0e0cb9f47c5b2e31c93a204355", size = 24218, upload-time = "2026-05-29T20:13:45.111Z" },
+    { url = "https://files.pythonhosted.org/packages/71/b4/49ac5d39f52ef5e9a12728fcc7c54da51765a35d58eb63f5bb82cb0fadba/bookcraft-1.4.0-py3-none-any.whl", hash = "sha256:3648aa170ad80398d44276e133b183638ad5ea0726781f0734fd38f7073589e6", size = 24914, upload-time = "2026-10-17T00:21:00.821Z" },
 ]
 
 [[package]]
@@ -354,7 +354,7 @@ dev = [
 
 [package.metadata]
 requires-dist = [
-    { name = "bookcraft", specifier = ">=1.3.0" },
+    { name = "bookcraft", specifier = ">=1.4.0" },
     { name = "flask", specifier = ">=3.1" },
     { name = "govuk-frontend-jinja", specifier = ">=3.0" },
     { name = "gunicorn", specifier = ">=23.0" },

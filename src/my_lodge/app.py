@@ -342,7 +342,7 @@ def _generate_pdfs_at_startup() -> None:
     modes = (
         "craft",
         "craft-dark",
-        "craft-2026-05",
+        "craft-2026-10",
         "craft-first-degree",
         "craft-second-degree",
         "ra",

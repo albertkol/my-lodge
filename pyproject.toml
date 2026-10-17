@@ -5,7 +5,7 @@ description = ""
 authors = [{name = "Albert Kolozsvari", email = "albertartk@gmail.com"}]
 requires-python = ">=3.13"
 dependencies = [
-    "bookcraft>=1.3.0",
+    "bookcraft>=1.4.0",
     "flask>=3.1",
     "govuk-frontend-jinja>=3.0",
     "gunicorn>=23.0",
@@ -16,7 +16,7 @@ dependencies = [
 [project.scripts]
 craft = "my_lodge.cli:craft"
 craft-dark = "my_lodge.cli:craft_dark"
-craft-2026-05 = "my_lodge.cli:craft_2026_05"
+craft-2026-10 = "my_lodge.cli:craft_2026_10"
 craft-first-degree = "my_lodge.cli:craft_first_degree"
 craft-second-degree = "my_lodge.cli:craft_second_degree"
 ra = "my_lodge.cli:ra"

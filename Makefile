@@ -10,8 +10,8 @@ craft:
 craft-dark:
 	uv run craft-dark
 
-craft-2026-05:
-	uv run craft-2026-05
+craft-2026-10:
+	uv run craft-2026-10
 
 craft-first-degree:
 	uv run craft-first-degree
